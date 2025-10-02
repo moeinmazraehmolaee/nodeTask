@@ -2,18 +2,21 @@ const express = require('express');
 const cors = require('cors');
 const http = require('http');
 const cookieParser = require('cookie-parser');
+const routes = require('./router');
+const setupSwagger = require('./config/swagger.config');
 require('dotenv').config();
 
 const { logger, setupConsoleLogging } = require('./config/logger');
 const { createLogsDirs } = require('./utils/createLogsDirs');
 const { connectDatabase } = require('./models');
 
+
 setupConsoleLogging();
 
 const app = express();
 const server = http.createServer(app);
 
-const allowedOrigins = ['http://localhost:3000'];
+const allowedOrigins = ['http://localhost:3000','http://localhost:5000'];
 
 const corsOptions = {
   origin: (origin, callback) => {
@@ -33,6 +36,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.set('trust proxy', 1);
 
+app.use('/api', routes);
+
 app.get('/health', (req, res) => {
   const response = {
     status: 'OK',
@@ -43,6 +48,9 @@ app.get('/health', (req, res) => {
   logger.info('Health check requested', { ip: req.ip, userAgent: req.get('User-Agent') });
   res.json(response);
 });
+
+// Swagger Docs
+setupSwagger(app);
 
 app.get('/', (req, res) => {
   const response = {
@@ -87,6 +95,9 @@ app.use((err, req, res, next) => {
   });
 });
 
+
+
+
 const startServer = async () => {
   try {
     createLogsDirs();
@@ -99,6 +110,7 @@ const startServer = async () => {
       logger.info(`Server is running on port ${PORT}`);
       logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
       logger.info(`Health check: http://localhost:${PORT}/health`);
+      logger.info(`API Docs: http://localhost:${PORT}/api-docs`);
     });
   } catch (error) {
     logger.error('Failed to start server', { message: error.message });
