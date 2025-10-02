@@ -1,3 +1,4 @@
 .env
 /public
 /logs
+/node_modules
