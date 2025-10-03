@@ -12,9 +12,7 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       minlength: 3,
     },
-
     name: { type: String, required: true, trim: true },
-
     phone: {
       type: String,
       required: true,
@@ -22,9 +20,12 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       match: /^09\d{9}$/,
     },
-
+    role: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Role",
+      required: true,
+    },
     password: { type: String, required: true },
-
     is_super_admin: { type: Boolean, default: false },
   },
   {
@@ -57,4 +58,4 @@ UserSchema.methods.comparePassword = async function (candidatePassword) {
 
 const User = mongoose.model("User", UserSchema);
 
-module.exports =  User ;
+module.exports = User;

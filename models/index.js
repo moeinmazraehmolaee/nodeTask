@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const user = require("./user.model");
+const user = require("./User.model");
 
 const db = {};
 
@@ -7,10 +7,7 @@ db.User = user;
 
 const connectDatabase = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGODB_URI);
 
     console.log("MongoDB connected successfully");
     console.log(`Database: ${mongoose.connection.name}`);
@@ -21,7 +18,7 @@ const connectDatabase = async () => {
     return true;
   } catch (error) {
     console.error("MongoDB connection error:", error.message);
-    process.exit(1); 
+    process.exit(1);
   }
 };
 
