@@ -1,4 +1,5 @@
 const rateLimit = require("express-rate-limit");
+const { ipKeyGenerator } = require("express-rate-limit"); 
 
 // --- IP limit ---
 const ipLimiter = rateLimit({
@@ -12,11 +13,11 @@ const ipLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// --- user name limiter---
+// --- user name limiter ---
 const userNameLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   max: 3, 
-  keyGenerator: (req) => req.body.email || req.ip,
+  keyGenerator: (req) => req.body.username || ipKeyGenerator(req),
   message: {
     success: false,
     message: "Too many verification code requests for this email. Try again in 1 hour."
