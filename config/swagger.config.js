@@ -1,6 +1,8 @@
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+
 const authSwagger = require("../swagger/auth.swagger");
+const userSwagger = require("../swagger/user.swagger");
 
 const options = {
   definition: {
@@ -21,7 +23,7 @@ const options = {
         cookieAuth: {
           type: "apiKey",
           in: "cookie",
-          name: "token", 
+          name: "token",
         },
       },
     },
@@ -32,10 +34,10 @@ const options = {
     ],
     paths: {
       ...authSwagger,
+      ...userSwagger,
     },
   },
-  apis: [
-  ],
+  apis: [],
 };
 
 const swaggerSpec = swaggerJSDoc(options);

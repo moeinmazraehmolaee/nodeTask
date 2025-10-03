@@ -1,8 +1,6 @@
-const jwt = require("jsonwebtoken");
-const { db } = require("../models");
+const User = require('../models/User.model.js')
 const { generateTokenAndSetCookie } = require("../utils/jwtUtils.js");
 
-const User = db.User;
 
 // Login user
 const login = async (req, res) => {
@@ -12,6 +10,7 @@ const login = async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
+    console.log('heb')
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid email or password" });

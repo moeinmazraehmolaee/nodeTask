@@ -16,7 +16,7 @@ const ipLimiter = rateLimit({
 // --- user name limiter ---
 const userNameLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
-  max: 3, 
+  max: 10, 
   keyGenerator: (req) => req.body.username || ipKeyGenerator(req),
   message: {
     success: false,
