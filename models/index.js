@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
-const user = require("./User.model");
 
 const db = {};
 
-db.User = user;
 
 const connectDatabase = async () => {
   try {

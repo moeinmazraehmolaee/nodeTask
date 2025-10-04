@@ -3,6 +3,7 @@ const swaggerUi = require("swagger-ui-express");
 
 const authSwagger = require("../swagger/auth.swagger");
 const userSwagger = require("../swagger/user.swagger");
+const productSwagger = require("../swagger/product.swagger");
 
 const options = {
   definition: {
@@ -35,6 +36,7 @@ const options = {
     paths: {
       ...authSwagger,
       ...userSwagger,
+      ...productSwagger
     },
   },
   apis: [],
